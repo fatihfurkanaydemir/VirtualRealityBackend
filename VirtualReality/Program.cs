@@ -16,6 +16,14 @@ builder.Services.AddIdentityInfrastructure(config);
 builder.Services.AddDbContext<IdentityContext>(options => options.UseNpgsql(
     builder.Configuration.GetConnectionString("Estate")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+      builder =>
+      {
+          builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+      });
+});
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc(
 "v1", new OpenApiInfo { Title = "Virtual Reality API", Version = "v1" });
@@ -41,7 +49,7 @@ app.UseSwaggerUI(
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseCors();
 app.UseRouting();
 
 app.UseAuthorization();
