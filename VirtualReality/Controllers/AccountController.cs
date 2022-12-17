@@ -14,10 +14,22 @@ namespace VirtualReality.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+
+        private readonly IAuthenticatedUserService _authenticatedUserService;
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
+
+        [HttpGet("get-user")]
+        public async Task<IActionResult> getUser()
+        {
+
+            return Ok(await _accountService.GetUser(_authenticatedUserService.UserId));
+        }
+
+
+
         [HttpPost("authenticate")]
         public async Task<IActionResult> AuthenticateAsync(AuthenticationRequest request)
         {

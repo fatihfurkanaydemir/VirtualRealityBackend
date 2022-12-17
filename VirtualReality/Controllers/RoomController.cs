@@ -11,9 +11,9 @@ namespace VirtualReality.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
-        private readonly DBContext _roomDBContext;
+        private readonly IdentityContext _roomDBContext;
 
-        public RoomController(DBContext roomDBContext)
+        public RoomController(IdentityContext roomDBContext)
         {
             _roomDBContext = roomDBContext;
         }

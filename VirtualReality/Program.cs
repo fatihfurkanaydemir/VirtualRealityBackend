@@ -2,7 +2,9 @@ using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using VirtualReality.Context;
+using VirtualReality.Interfaces;
 using VirtualReality.Middlewares;
+using VirtualReality.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = new ConfigurationBuilder()
@@ -15,6 +17,7 @@ builder.Services.AddMvc();
 builder.Services.AddIdentityInfrastructure(config);
 builder.Services.AddDbContext<IdentityContext>(options => options.UseNpgsql(
     builder.Configuration.GetConnectionString("Estate")));
+builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 
 builder.Services.AddCors(options =>
 {

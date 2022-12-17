@@ -11,9 +11,9 @@ namespace VirtualReality.Controllers
     [ApiController]
     public class HouseController : ControllerBase
     {
-        private readonly DBContext _houseDBContext;
+        private readonly IdentityContext _houseDBContext;
 
-        public HouseController(DBContext houseDBContext)
+        public HouseController(IdentityContext houseDBContext)
         {
             _houseDBContext = houseDBContext;
         }

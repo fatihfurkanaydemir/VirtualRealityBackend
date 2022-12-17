@@ -100,6 +100,15 @@ namespace VirtualReality.Services
                 throw new ApiException($"Email {request.Email } is already registered.");
             }
         }
+        public async Task<ApplicationUser> GetUser(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
+            {
+                throw new ApiException($"No Accounts Registered with {Id}.");
+            }
+            return user;
+        }
 
         private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user)
         {

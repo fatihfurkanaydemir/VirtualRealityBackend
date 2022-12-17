@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using VirtualReality.Models;
 
 namespace VirtualReality.Interfaces
 {
@@ -15,5 +16,7 @@ namespace VirtualReality.Interfaces
         Task<Response<string>> ConfirmEmailAsync(string userId, string code);
         Task ForgotPassword(ForgotPasswordRequest model, string origin);
         Task<Response<string>> ResetPassword(ResetPasswordRequest model);
+        Task<ApplicationUser> GetUser(string Id);
+
     }
 }
