@@ -16,9 +16,10 @@ namespace VirtualReality.Controllers
         private readonly IAccountService _accountService;
 
         private readonly IAuthenticatedUserService _authenticatedUserService;
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, IAuthenticatedUserService authenticatedUserService)
         {
             _accountService = accountService;
+            _authenticatedUserService = authenticatedUserService;   
         }
 
         [HttpGet("get-user")]

@@ -9,18 +9,17 @@ using VirtualReality.Context;
 
 #nullable disable
 
-namespace VirtualReality.Migrations.Identity
+namespace VirtualReality.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20221217125530_AddRegister")]
-    partial class AddRegister
+    [Migration("20221217194651_tables")]
+    partial class tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Identity")
                 .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -49,7 +48,7 @@ namespace VirtualReality.Migrations.Identity
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("Role", "Identity");
+                    b.ToTable("Role", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -74,7 +73,7 @@ namespace VirtualReality.Migrations.Identity
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleClaims", "Identity");
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -99,7 +98,7 @@ namespace VirtualReality.Migrations.Identity
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaims", "Identity");
+                    b.ToTable("UserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -121,7 +120,7 @@ namespace VirtualReality.Migrations.Identity
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserLogins", "Identity");
+                    b.ToTable("UserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -136,7 +135,7 @@ namespace VirtualReality.Migrations.Identity
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles", "Identity");
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -155,7 +154,7 @@ namespace VirtualReality.Migrations.Identity
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", "Identity");
+                    b.ToTable("UserTokens", (string)null);
                 });
 
             modelBuilder.Entity("VirtualReality.DTOs.Account.RefreshToken", b =>
@@ -198,7 +197,7 @@ namespace VirtualReality.Migrations.Identity
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("RefreshToken", "Identity");
+                    b.ToTable("RefreshToken");
                 });
 
             modelBuilder.Entity("VirtualReality.Models.ApplicationUser", b =>
@@ -270,7 +269,7 @@ namespace VirtualReality.Migrations.Identity
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("User", "Identity");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("VirtualReality.Models.House", b =>
@@ -299,7 +298,7 @@ namespace VirtualReality.Migrations.Identity
 
                     b.HasKey("Id");
 
-                    b.ToTable("Houses", "Identity");
+                    b.ToTable("Houses");
                 });
 
             modelBuilder.Entity("VirtualReality.Models.Room", b =>
@@ -319,7 +318,7 @@ namespace VirtualReality.Migrations.Identity
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms", "Identity");
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

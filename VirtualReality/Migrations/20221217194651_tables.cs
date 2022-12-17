@@ -4,20 +4,16 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace VirtualReality.Migrations.Identity
+namespace VirtualReality.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRegister : Migration
+    public partial class tables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "Identity");
-
             migrationBuilder.CreateTable(
                 name: "Houses",
-                schema: "Identity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -35,7 +31,6 @@ namespace VirtualReality.Migrations.Identity
 
             migrationBuilder.CreateTable(
                 name: "Role",
-                schema: "Identity",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -50,7 +45,6 @@ namespace VirtualReality.Migrations.Identity
 
             migrationBuilder.CreateTable(
                 name: "Rooms",
-                schema: "Identity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -65,7 +59,6 @@ namespace VirtualReality.Migrations.Identity
 
             migrationBuilder.CreateTable(
                 name: "User",
-                schema: "Identity",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -93,7 +86,6 @@ namespace VirtualReality.Migrations.Identity
 
             migrationBuilder.CreateTable(
                 name: "RoleClaims",
-                schema: "Identity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -108,7 +100,6 @@ namespace VirtualReality.Migrations.Identity
                     table.ForeignKey(
                         name: "FK_RoleClaims_Role_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "Identity",
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -116,7 +107,6 @@ namespace VirtualReality.Migrations.Identity
 
             migrationBuilder.CreateTable(
                 name: "RefreshToken",
-                schema: "Identity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -136,14 +126,12 @@ namespace VirtualReality.Migrations.Identity
                     table.ForeignKey(
                         name: "FK_RefreshToken_User_ApplicationUserId",
                         column: x => x.ApplicationUserId,
-                        principalSchema: "Identity",
                         principalTable: "User",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserClaims",
-                schema: "Identity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -158,7 +146,6 @@ namespace VirtualReality.Migrations.Identity
                     table.ForeignKey(
                         name: "FK_UserClaims_User_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Identity",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -166,7 +153,6 @@ namespace VirtualReality.Migrations.Identity
 
             migrationBuilder.CreateTable(
                 name: "UserLogins",
-                schema: "Identity",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(type: "text", nullable: false),
@@ -180,7 +166,6 @@ namespace VirtualReality.Migrations.Identity
                     table.ForeignKey(
                         name: "FK_UserLogins_User_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Identity",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -188,7 +173,6 @@ namespace VirtualReality.Migrations.Identity
 
             migrationBuilder.CreateTable(
                 name: "UserRoles",
-                schema: "Identity",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "text", nullable: false),
@@ -200,14 +184,12 @@ namespace VirtualReality.Migrations.Identity
                     table.ForeignKey(
                         name: "FK_UserRoles_Role_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "Identity",
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserRoles_User_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Identity",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -215,7 +197,6 @@ namespace VirtualReality.Migrations.Identity
 
             migrationBuilder.CreateTable(
                 name: "UserTokens",
-                schema: "Identity",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "text", nullable: false),
@@ -229,7 +210,6 @@ namespace VirtualReality.Migrations.Identity
                     table.ForeignKey(
                         name: "FK_UserTokens_User_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Identity",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -237,51 +217,43 @@ namespace VirtualReality.Migrations.Identity
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshToken_ApplicationUserId",
-                schema: "Identity",
                 table: "RefreshToken",
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                schema: "Identity",
                 table: "Role",
                 column: "NormalizedName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
-                schema: "Identity",
                 table: "RoleClaims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                schema: "Identity",
                 table: "User",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                schema: "Identity",
                 table: "User",
                 column: "NormalizedUserName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",
-                schema: "Identity",
                 table: "UserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserLogins_UserId",
-                schema: "Identity",
                 table: "UserLogins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
-                schema: "Identity",
                 table: "UserRoles",
                 column: "RoleId");
         }
@@ -290,44 +262,34 @@ namespace VirtualReality.Migrations.Identity
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Houses",
-                schema: "Identity");
+                name: "Houses");
 
             migrationBuilder.DropTable(
-                name: "RefreshToken",
-                schema: "Identity");
+                name: "RefreshToken");
 
             migrationBuilder.DropTable(
-                name: "RoleClaims",
-                schema: "Identity");
+                name: "RoleClaims");
 
             migrationBuilder.DropTable(
-                name: "Rooms",
-                schema: "Identity");
+                name: "Rooms");
 
             migrationBuilder.DropTable(
-                name: "UserClaims",
-                schema: "Identity");
+                name: "UserClaims");
 
             migrationBuilder.DropTable(
-                name: "UserLogins",
-                schema: "Identity");
+                name: "UserLogins");
 
             migrationBuilder.DropTable(
-                name: "UserRoles",
-                schema: "Identity");
+                name: "UserRoles");
 
             migrationBuilder.DropTable(
-                name: "UserTokens",
-                schema: "Identity");
+                name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Role",
-                schema: "Identity");
+                name: "Role");
 
             migrationBuilder.DropTable(
-                name: "User",
-                schema: "Identity");
+                name: "User");
         }
     }
 }
