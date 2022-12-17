@@ -14,9 +14,8 @@ var config = new ConfigurationBuilder()
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddMvc();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddIdentityInfrastructure(config);
-builder.Services.AddDbContext<IdentityContext>(options => options.UseNpgsql(
-    builder.Configuration.GetConnectionString("Estate")));
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 
 builder.Services.AddCors(options =>
@@ -27,6 +26,7 @@ builder.Services.AddCors(options =>
           builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
       });
 });
+
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc(
 "v1", new OpenApiInfo { Title = "Virtual Reality API", Version = "v1" });
@@ -85,6 +85,7 @@ app.UseCors();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapRazorPages();
 

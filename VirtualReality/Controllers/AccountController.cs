@@ -6,6 +6,7 @@ using VirtualReality.DTOs.Account;
 using VirtualReality.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace VirtualReality.Controllers
 {
@@ -25,11 +26,8 @@ namespace VirtualReality.Controllers
         [HttpGet("get-user")]
         public async Task<IActionResult> getUser()
         {
-
-            return Ok(await _accountService.GetUser(_authenticatedUserService.UserId));
+          return Ok(await _accountService.GetUser(_authenticatedUserService.UserId));
         }
-
-
 
         [HttpPost("authenticate")]
         public async Task<IActionResult> AuthenticateAsync(AuthenticationRequest request)
