@@ -37,7 +37,7 @@ namespace VirtualReality.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var data = await _houseDBContext.Houses.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+            var data = await _houseDBContext.Houses.AsNoTracking().Include(x => x.User).SingleOrDefaultAsync(x => x.Id == id);
             if (data == null) throw new ApiException($"House not found: {id}");
 
             return Ok(new Response<House>() { Succeeded = true, Data = data });
