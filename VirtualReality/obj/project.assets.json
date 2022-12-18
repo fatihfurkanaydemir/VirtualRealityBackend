@@ -4596,19 +4596,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Murat\\.nuget\\packages\\": {}
+    "C:\\Users\\furka\\.nuget\\packages\\": {},
+    "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Murat\\source\\repos\\VirtualReality\\VirtualReality\\VirtualReality.csproj",
+      "projectUniqueName": "C:\\Users\\furka\\Desktop\\VirtualRealityBackend\\VirtualReality\\VirtualReality.csproj",
       "projectName": "VirtualReality",
-      "projectPath": "C:\\Users\\Murat\\source\\repos\\VirtualReality\\VirtualReality\\VirtualReality.csproj",
-      "packagesPath": "C:\\Users\\Murat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Murat\\source\\repos\\VirtualReality\\VirtualReality\\obj\\",
+      "projectPath": "C:\\Users\\furka\\Desktop\\VirtualRealityBackend\\VirtualReality\\VirtualReality.csproj",
+      "packagesPath": "C:\\Users\\furka\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\furka\\Desktop\\VirtualRealityBackend\\VirtualReality\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Murat\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\furka\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4695,7 +4699,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\6.0.304\\RuntimeIdentifierGraph.json"
       }
     }
   }

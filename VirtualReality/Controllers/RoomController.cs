@@ -38,14 +38,27 @@ namespace VirtualReality.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var data = await _roomDBContext.Rooms.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+            var data = await _roomDBContext.Rooms.AsNoTracking().Include(x => x.House).SingleOrDefaultAsync(x => x.Id == id);
             if (data == null) throw new ApiException($"Room not found: {id}");
 
             return Ok(new Response<Room>() { Succeeded = true, Data = data });
         }
 
-        // POST api/<RoomsControllers>
-        [HttpPost]
+        // GET api/<RoomsControllers>/5
+        [HttpGet("GetByHouseId/{id}")]
+        public async Task<IActionResult> GetByHouseId(int id)
+        {
+          var data = await _roomDBContext.Rooms.AsNoTracking()
+            .Include(x => x.House)
+            .Where(x => x.House.Id == id)
+            .ToListAsync();
+          if (data == null) throw new ApiException($"Rooms not found: {id}");
+
+          return Ok(new Response<List<Room>>() { Succeeded = true, Data = data });
+        }
+
+    // POST api/<RoomsControllers>
+    [HttpPost]
         public async Task<IActionResult> Post([FromBody] RoomDTO roomDTO)
         {
             if (_authenticatedUserService.UserId == null) throw new ApiException($"Not authenticated");
@@ -56,7 +69,6 @@ namespace VirtualReality.Controllers
 
             Room room = new Room()
             {
-                Id = roomDTO.Id,
                 House = new House()
                 {
                     
