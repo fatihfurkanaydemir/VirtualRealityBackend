@@ -38,6 +38,7 @@ namespace VirtualReality.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var data = await _houseDBContext.Houses.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+            if (data == null) throw new ApiException($"House not found: {id}");
 
             return Ok(new Response<House>() { Succeeded = true, Data = data });
         }
@@ -103,7 +104,10 @@ namespace VirtualReality.Controllers
         {
             if (_authenticatedUserService.UserId == null) throw new ApiException($"Not authenticated");
 
+            
             var item = await _houseDBContext.Houses.Include(x => x.User).SingleOrDefaultAsync(x => x.Id == id);
+            if (item == null) throw new ApiException($"House not found: {id}");
+
             _houseDBContext.Entry(item.User).State = EntityState.Unchanged;
             _houseDBContext.Houses.Remove(item);
             await _houseDBContext.SaveChangesAsync();
