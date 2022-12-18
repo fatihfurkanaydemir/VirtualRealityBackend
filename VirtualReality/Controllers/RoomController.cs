@@ -52,13 +52,45 @@ namespace VirtualReality.Controllers
             .Include(x => x.House)
             .Where(x => x.House.Id == id)
             .ToListAsync();
-          if (data == null) throw new ApiException($"Rooms not found: {id}");
+          if (data == null) throw new ApiException($"Rooms not found for house: {id}");
 
-          return Ok(new Response<List<Room>>() { Succeeded = true, Data = data });
+          var rooms = new List<RoomOutDTO>();
+          foreach(var room in data)
+          {
+            rooms.Add(new RoomOutDTO()
+            {
+              RoomNumber = room.RoomNumber,
+              AssetLink = room.House.AssetLink,
+              HouseID = room.House.Id,
+              Id = room.Id
+            });
+          }
+
+          return Ok(new Response<List<RoomOutDTO>>() { Succeeded = true, Data = rooms });
         }
 
-    // POST api/<RoomsControllers>
-    [HttpPost]
+        [HttpGet("GetByRoomNumber/{roomNumber}")]
+        public async Task<IActionResult> GetByRoomNumber(int roomNumber)
+        {
+          var data = await _roomDBContext.Rooms.AsNoTracking()
+            .Include(x => x.House)
+            .SingleOrDefaultAsync(x => x.RoomNumber == roomNumber);
+
+          if (data == null) throw new ApiException($"Room not found for room number: {roomNumber}");
+
+          var room = new RoomOutDTO()
+          {
+            RoomNumber = data.RoomNumber,
+            AssetLink = data.House.AssetLink,
+            HouseID = data.House.Id,
+            Id = data.Id
+          };
+
+          return Ok(new Response<RoomOutDTO>() { Succeeded = true, Data = room });
+        }
+
+        // POST api/<RoomsControllers>
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] RoomDTO roomDTO)
         {
             if (_authenticatedUserService.UserId == null) throw new ApiException($"Not authenticated");

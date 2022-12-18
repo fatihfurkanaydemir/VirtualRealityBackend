@@ -80,6 +80,7 @@ namespace VirtualReality.Services
                 UserName = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
+                PhoneNumber = request.PhoneNumber,
                 EmailConfirmed = true
             };
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);

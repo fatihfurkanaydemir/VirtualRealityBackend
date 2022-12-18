@@ -43,6 +43,22 @@ namespace VirtualReality.Controllers
             return Ok(new Response<House>() { Succeeded = true, Data = data });
         }
 
+        // GET api/<HousesControllers>/5
+        [HttpGet("GetRealEstateAgentHouses")]
+        public async Task<IActionResult> GetRealEstateAgentHouses()
+        {
+          if (_authenticatedUserService.UserId == null) throw new ApiException($"Not authenticated");
+
+          var data = await _houseDBContext.Houses.AsNoTracking()
+            .Include(x => x.User)
+            .Where(x => x.User.Id == _authenticatedUserService.UserId)
+            .ToListAsync();
+
+          if (data == null) throw new ApiException($"Houses not found for authenticated user");
+
+          return Ok(new Response<List<House>>() { Succeeded = true, Data = data });
+        }
+
         // POST api/<HousesControllers>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] HouseDTO houseDTO)
