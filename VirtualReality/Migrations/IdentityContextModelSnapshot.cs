@@ -277,13 +277,32 @@ namespace VirtualReality.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AssetLink")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("Floor")
                         .HasColumnType("integer");
 
                     b.Property<bool>("Furnished")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Location")
+                    b.Property<string>("ImageLink")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Longitude")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -293,7 +312,12 @@ namespace VirtualReality.Migrations
                     b.Property<int>("SquareMeter")
                         .HasColumnType("integer");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Houses");
                 });
@@ -306,14 +330,15 @@ namespace VirtualReality.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ModelLink")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("HouseId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("RoomNumber")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HouseId");
 
                     b.ToTable("Rooms");
                 });
@@ -374,6 +399,26 @@ namespace VirtualReality.Migrations
                     b.HasOne("VirtualReality.Models.ApplicationUser", null)
                         .WithMany("RefreshTokens")
                         .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("VirtualReality.Models.House", b =>
+                {
+                    b.HasOne("VirtualReality.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("VirtualReality.Models.Room", b =>
+                {
+                    b.HasOne("VirtualReality.Models.House", "House")
+                        .WithMany()
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("House");
                 });
 
             modelBuilder.Entity("VirtualReality.Models.ApplicationUser", b =>

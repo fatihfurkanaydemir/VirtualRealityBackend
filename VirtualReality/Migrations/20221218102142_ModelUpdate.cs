@@ -7,28 +7,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace VirtualReality.Migrations
 {
     /// <inheritdoc />
-    public partial class tables : Migration
+    public partial class ModelUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Houses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Price = table.Column<int>(type: "integer", nullable: false),
-                    Location = table.Column<string>(type: "text", nullable: false),
-                    SquareMeter = table.Column<int>(type: "integer", nullable: false),
-                    Furnished = table.Column<bool>(type: "boolean", nullable: false),
-                    Floor = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Houses", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
@@ -41,20 +24,6 @@ namespace VirtualReality.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Role", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rooms",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoomNumber = table.Column<int>(type: "integer", nullable: false),
-                    ModelLink = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rooms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,6 +72,34 @@ namespace VirtualReality.Migrations
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Houses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Price = table.Column<int>(type: "integer", nullable: false),
+                    Latitude = table.Column<string>(type: "text", nullable: false),
+                    Longitude = table.Column<string>(type: "text", nullable: false),
+                    SquareMeter = table.Column<int>(type: "integer", nullable: false),
+                    Furnished = table.Column<bool>(type: "boolean", nullable: false),
+                    Floor = table.Column<int>(type: "integer", nullable: false),
+                    AssetLink = table.Column<string>(type: "text", nullable: false),
+                    ImageLink = table.Column<string>(type: "text", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Houses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Houses_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -215,6 +212,31 @@ namespace VirtualReality.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Rooms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoomNumber = table.Column<int>(type: "integer", nullable: false),
+                    HouseId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rooms_Houses_HouseId",
+                        column: x => x.HouseId,
+                        principalTable: "Houses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Houses_UserId",
+                table: "Houses",
+                column: "UserId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshToken_ApplicationUserId",
                 table: "RefreshToken",
@@ -230,6 +252,11 @@ namespace VirtualReality.Migrations
                 name: "IX_RoleClaims_RoleId",
                 table: "RoleClaims",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rooms_HouseId",
+                table: "Rooms",
+                column: "HouseId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -262,9 +289,6 @@ namespace VirtualReality.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Houses");
-
-            migrationBuilder.DropTable(
                 name: "RefreshToken");
 
             migrationBuilder.DropTable(
@@ -284,6 +308,9 @@ namespace VirtualReality.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Houses");
 
             migrationBuilder.DropTable(
                 name: "Role");

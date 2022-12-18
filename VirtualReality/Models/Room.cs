@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public int RoomNumber { get; set; }
-        public string ModelLink { get; set; }
+        public House House { get; set; }
     }
 }
