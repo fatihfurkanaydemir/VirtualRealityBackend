@@ -53,7 +53,7 @@ namespace VirtualReality.Controllers
                 Furnished = houseDTO.Furnished,
                 Floor = houseDTO.Floor,
                 SquareMeter = houseDTO.SquareMeter,
-                DateCreated = DateTime.Now,
+                DateCreated = DateTime.UtcNow,
                 Description = houseDTO.Description,
                 ImageLink = houseDTO.ImageLink,
                 Latitude = houseDTO.Latitude,
